@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const premiumFeatures = [
     "Multiple journals",
@@ -19,7 +20,7 @@ const EntryDetailModal = () => {
     const router = useRouter();
 
     return (
-        <View className="flex-1 bg-[#34B4E8]">
+        <SafeAreaView edges={['top']} className="flex-1 bg-[#34B4E8]">
             <View className="p-4 bg-[#34B4E8] flex-row justify-between items-center">
                 <Text className="text-white font-semibold text-lg">Tue, Nov 18, 2025  10:02 AM</Text>
                 <View className="flex-row items-center gap-5">
@@ -75,7 +76,7 @@ const EntryDetailModal = () => {
                 </Text>
             </ScrollView>
 
-        </View>
+        </SafeAreaView>
     );
 }
 

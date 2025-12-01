@@ -5,11 +5,12 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ListView = () => {
     const router = useRouter();
     return (
-        <View className="flex-1 bg-black pt-4 px-4">
+        <SafeAreaView className="flex-1 bg-black pt-4 px-4">
             <Text className="text-white font-bold text-lg mb-4">
                 November 2025
             </Text>
@@ -35,7 +36,7 @@ const ListView = () => {
                 </View>
             </TouchableOpacity>
 
-        </View>
+        </SafeAreaView>
     );
 }
 

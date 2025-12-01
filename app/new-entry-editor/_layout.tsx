@@ -1,25 +1,25 @@
 import { Stack } from 'expo-router';
 import React from 'react';
 
-export default function MoreLayout() {
+export default function EntryEditorLayout() {
     return (
         <Stack screenOptions={{ headerShown: false }}>
             <Stack.Screen
-                name="suggestions"
+                name="edit-date"
                 options={{
                     presentation: 'modal',
 
                 }}
             />
             <Stack.Screen
-                name="day-view"
+                name="move-journal"
                 options={{
                     presentation: 'modal',
 
                 }}
             />
             <Stack.Screen
-                name="premium"
+                name="location"
                 options={{
                     presentation: 'modal',
 

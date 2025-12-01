@@ -1,11 +1,11 @@
 import { Feather, Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { Href, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TagsModal from './tags';
 
-const OptionRow = ({ label, value, href, onPress }: { label: string; value: string; href?: string; onPress?: () => void }) => {
+const OptionRow = ({ label, value, href, onPress }: { label: string; value: string; href?: Href; onPress?: () => void }) => {
   const router = useRouter();
   const handlePress = href ? () => router.push(href) : onPress;
 
@@ -26,7 +26,7 @@ const ActionButton = ({ label }: { label: string }) => (
   </TouchableOpacity>
 );
 
-const NavigationRow = ({ label, href }: { label: string; href: string }) => {
+const NavigationRow = ({ label, href }: { label: string; href: Href }) => {
   const router = useRouter();
   return (
     <TouchableOpacity onPress={() => router.push(href)} className="flex-row justify-between items-center py-4 px-4 border-b border-gray-800 last:border-b-0">

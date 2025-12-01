@@ -9,35 +9,14 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-// interface QuickStartItem {
-//   name: string;
-//   icon: React.ReactNode;
-// }
 
-// const quickStartItems: QuickStartItem[] = [
-//   {
-//     name: "Suggestions",
-//     icon: <Ionicons name="bulb-outline" size={28} color="white" />,
-//   },
-//   {
-//     name: "Day View",
-//     icon: <Ionicons name="sunny-outline" size={28} color="white" />,
-//   },
-//   { name: "Templates", icon: <Feather name="edit" size={26} color="white" /> },
-//   {
-//     name: "Audio",
-//     icon: <Ionicons name="mic-outline" size={28} color="white" />,
-//   },
-// ];
 
 interface QuickStartItem {
   name: string;
   icon: React.ReactNode;
-  // route: string; // The route to navigate to
   route?: Href;
 }
 
-// Add the routes to your data
 const quickStartItems: QuickStartItem[] = [
   {
     name: "Suggestions",
@@ -52,12 +31,12 @@ const quickStartItems: QuickStartItem[] = [
   {
     name: "Templates",
     icon: <Feather name="edit" size={26} color="white" />,
-    route: "/", // Left empty as requested
+    route: "/",
   },
   {
     name: "Audio",
     icon: <Ionicons name="mic-outline" size={28} color="white" />,
-    route: "/more/premium", // Audio button opens the premium modal
+    route: "/more/premium",
   },
 ];
 
