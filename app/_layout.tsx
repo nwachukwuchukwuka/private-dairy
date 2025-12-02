@@ -77,7 +77,8 @@ export default function RootLayout() {
             <Stack.Screen
               name="journals/new-entry"
               options={{
-                presentation: 'fullScreenModal',
+                // presentation: 'fullScreenModal',
+                presentation: 'modal',
               }}
             />
           </Stack>

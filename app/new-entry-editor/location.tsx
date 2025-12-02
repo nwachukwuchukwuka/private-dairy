@@ -18,7 +18,6 @@ const LocationScreen = () => {
 
     return (
         <SafeAreaView className="flex-1 bg-black" edges={['top']}>
-            {/* Header */}
             <View className="flex-row items-center p-3 relative">
                 <TouchableOpacity onPress={() => router.back()} className="z-10">
                     <Text className="text-blue-500 text-lg">Cancel</Text>
@@ -28,7 +27,6 @@ const LocationScreen = () => {
                 </View>
             </View>
 
-            {/* Map and Search */}
             <View className="h-48 bg-gray-700 items-center justify-center">
                 <Text className="text-white">(Map Component)</Text>
             </View>

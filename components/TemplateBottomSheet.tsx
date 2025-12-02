@@ -6,9 +6,6 @@ import {
 import React, { forwardRef, useMemo } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-
-
-
 export type ResonateQuotesModalRef = BottomSheetModal;
 
 const TemplateBottomSheet = forwardRef<ResonateQuotesModalRef>((props, ref) => {

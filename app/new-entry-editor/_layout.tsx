@@ -25,6 +25,16 @@ export default function EntryEditorLayout() {
 
                 }}
             />
+            <Stack.Screen
+                name="entry-info"
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+
+            <Stack.Screen name="version-history" options={{ presentation: 'modal' }} />
+            <Stack.Screen name="pdf-preview" options={{ presentation: 'modal' }} />
+            <Stack.Screen name="this-day-view" options={{ presentation: 'modal' }} />
         </Stack>
     );
 }
