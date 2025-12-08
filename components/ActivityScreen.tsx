@@ -38,7 +38,6 @@ const ActivityScreen: React.FC<ActivityScreenProps> = ({ onBack }) => {
                 <Text className="text-white text-lg ml-1">Filters</Text>
             </TouchableOpacity>
 
-            {/* Content */}
             <View className="mt-6 px-4 flex-1">
                 <Text className="text-white text-2xl font-bold mb-4">Activity</Text>
                 <FlatList

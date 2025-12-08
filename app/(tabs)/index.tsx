@@ -3,11 +3,11 @@ import CalendarView from "@/components/CalendarView";
 import ListView from "@/components/ListView";
 import MapView from "@/components/MapView";
 import MediaView from "@/components/MediaView";
+import { useAppContext } from "@/context/context";
 import { Feather, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
-  StatusBar,
   Text,
   TouchableOpacity,
   View
@@ -21,6 +21,9 @@ const JournalScreen = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabName>("Book");
   const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const { activeJournal } = useAppContext();
+
+  const activeColor = activeJournal?.color.replace('bg-', '') || '#00AEEF';
 
   const renderContent = () => {
     switch (activeTab) {
@@ -42,8 +45,7 @@ const JournalScreen = () => {
 
   return (
     <View className="flex-1">
-      <StatusBar barStyle="light-content" />
-      <View className="bg-[#00AEEF] pt-16 pb-8 px-4">
+      <View className={`bg-${activeColor} pt-16 pb-8 px-4`}>
         <View className="flex-row justify-between items-center mb-4">
           <TouchableOpacity onPress={() => router.push("/journals/journals-menu")}>
             <Feather name="menu" size={24} color="white" />
@@ -88,7 +90,9 @@ const JournalScreen = () => {
           </View>
         </View>
         <View className="my-10">
-          <Text className="text-white text-4xl font-semibold">Journal</Text>
+          <Text className="text-white text-4xl font-semibold">
+            {activeJournal ? activeJournal.name : 'No Journal Selected'}
+          </Text>
           <Text className="text-white text-md">2025</Text>
         </View>
       </View>

@@ -1,5 +1,6 @@
+import { useAppContext } from '@/context/context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -7,8 +8,28 @@ const JournalEditor = () => {
     const router = useRouter();
     const params = useLocalSearchParams();
     const { id, name, color, entries } = params;
+    console.log("id from bookview", id);
 
-    const [journalName, setJournalName] = useState(name as string);
+    const { journals, activeJournal, setActiveJournal, updateJournal, deleteJournal } = useAppContext();
+    const journalToEdit = useMemo(() => journals.find(j => j.id === id), [journals, id]);
+
+
+    const [journalName, setJournalName] = useState(journalToEdit?.name || '');
+
+
+
+    const handleSave = () => {
+        if (id && journalName.trim()) {
+            const updatedData = { name: journalName };
+            updateJournal(id as string, updatedData);
+
+
+            if (activeJournal?.id === id) {
+                setActiveJournal({ ...activeJournal, ...updatedData });
+            }
+        }
+        router.back();
+    };
 
     const handleDelete = () => {
         Alert.alert(
@@ -17,11 +38,14 @@ const JournalEditor = () => {
             [
                 { text: "Cancel", style: "cancel" },
                 {
-                    text: "Delete", onPress: () => {
-
-                        console.log(`Deleting journal with id: ${id}`);
+                    text: "Delete",
+                    onPress: () => {
+                        if (id) {
+                            deleteJournal(id as string);
+                        }
                         router.back();
-                    }, style: "destructive"
+                    },
+                    style: "destructive"
                 }
             ]
         );
@@ -34,9 +58,8 @@ const JournalEditor = () => {
                     <Text className="text-white text-lg">Cancel</Text>
                 </TouchableOpacity>
                 <Text className="text-white text-xl font-bold">Journal Editor</Text>
-                <TouchableOpacity onPress={() => {
-                    router.back();
-                }}>
+                <TouchableOpacity onPress={handleSave}>
+
                     <Text className="text-white text-lg font-bold">Save</Text>
                 </TouchableOpacity>
             </View>
@@ -55,7 +78,7 @@ const JournalEditor = () => {
                     <Text className="text-blue-500 text-lg">Day One Blue</Text>
                 </View>
             </View>
-            <Text className="text-gray-500 mt-2 ml-4">{entries} Entries, 0 Media</Text>
+            <Text className="text-gray-500 mt-2 ml-4">{journalToEdit?.entries || 0} Entries, 0 Media</Text>
 
             <View className="bg-gray-800 rounded-lg p-4 mt-8">
                 <Text className="text-white text-lg">Advanced</Text>
@@ -68,4 +91,4 @@ const JournalEditor = () => {
     );
 };
 
-export default JournalEditor;
+export default JournalEditor;  

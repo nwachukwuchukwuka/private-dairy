@@ -21,4 +21,4 @@ const YearScreen: React.FC<YearScreenProps> = ({ onBack }) => {
     );
 };
 
-export default YearScreen;
+export default YearScreen; 

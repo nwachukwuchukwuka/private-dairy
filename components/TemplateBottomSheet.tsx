@@ -6,16 +6,17 @@ import {
 import React, { forwardRef, useMemo } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-export type ResonateQuotesModalRef = BottomSheetModal;
 
-const TemplateBottomSheet = forwardRef<ResonateQuotesModalRef>((props, ref) => {
+export type TemplateBottomSheetRef = BottomSheetModal;
+
+const TemplateBottomSheet = forwardRef<TemplateBottomSheetRef>((props, ref) => {
     const snapPoints = useMemo(() => ["50%"], []);
 
-    const handleGotIt = () => {
-        if (ref && "current" in ref) {
-            ref.current?.dismiss();
-        }
-    };
+    //   const handleGotIt = () => {
+    //     if (ref && "current" in ref) {
+    //       ref.current?.dismiss();
+    //     }
+    //   };
 
     return (
         <BottomSheetModal
@@ -49,7 +50,7 @@ const TemplateBottomSheet = forwardRef<ResonateQuotesModalRef>((props, ref) => {
                 <View className="w-full mt-6">
                     <TouchableOpacity
                         className="bg-white w-full py-4 rounded-full items-center justify-center"
-                        onPress={handleGotIt}
+                    // onPress={handleGotIt}
                     >
                         <Text className="text-black text-lg font-bold">Got it!</Text>
                     </TouchableOpacity>
@@ -60,19 +61,3 @@ const TemplateBottomSheet = forwardRef<ResonateQuotesModalRef>((props, ref) => {
 });
 
 export default TemplateBottomSheet;
-
-
-// import React from 'react'
-// import { StyleSheet, Text, View } from 'react-native'
-
-// const TemplateBottomSheet = () => {
-//     return (
-//         <View>
-//             <Text>TemplateBottomSheet</Text>
-//         </View>
-//     )
-// }
-
-// export default TemplateBottomSheet
-
-// const styles = StyleSheet.create({})

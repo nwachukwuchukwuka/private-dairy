@@ -28,4 +28,4 @@ const TagsScreen: React.FC<TagsScreenProps> = ({ onBack }) => {
     );
 };
 
-export default TagsScreen;
+export default TagsScreen; 

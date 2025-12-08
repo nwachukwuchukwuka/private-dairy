@@ -1,3 +1,4 @@
+import { useAppContext } from '@/context/context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
@@ -7,15 +8,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const personalSuggestions = [
     'Journal', 'Daily', '2025', 'Dreams', 'Food', 'Intentions', 'Vacation', 'Pregnancy', 'Meeting Notes'
 ];
-
 const sharedSuggestions = [
     '2025', 'Travel', 'Life Stories', 'Goals', 'Meetings', 'Vacation', 'Pregnancy', 'Our Wedding', 'Our Story'
 ];
-
 const colors = ['bg-orange-500', 'bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-red-500'];
 
 const AddJournal = () => {
     const router = useRouter();
+    const { addJournal } = useAppContext();
     const [tab, setTab] = useState<'Personal' | 'Shared'>('Personal');
     const [journalName, setJournalName] = useState('Journal');
     const [journalColor, setJournalColor] = useState('bg-orange-500');
@@ -28,6 +28,16 @@ const AddJournal = () => {
         setJournalColor(randomColor);
     };
 
+    const handleSaveJournal = () => {
+        const newJournal = {
+            name: journalName,
+            color: journalColor,
+        };
+
+        addJournal(newJournal);
+        router.back();
+    };
+
     return (
         <SafeAreaView className="flex-1 bg-black p-4 items-center">
             <View className="w-full flex-row justify-between items-center mb-8">
@@ -35,7 +45,7 @@ const AddJournal = () => {
                     <Text className="text-white text-lg">Cancel</Text>
                 </TouchableOpacity>
                 <Text className="text-white text-xl font-bold">New Journal</Text>
-                <TouchableOpacity onPress={() => { /* Logic to save the journal */ router.back(); }}>
+                <TouchableOpacity onPress={handleSaveJournal}>
                     <Text className="text-white text-lg font-bold">Done</Text>
                 </TouchableOpacity>
             </View>

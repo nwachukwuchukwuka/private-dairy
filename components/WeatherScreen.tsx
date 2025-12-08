@@ -28,4 +28,4 @@ const WeatherScreen: React.FC<WeatherScreenProps> = ({ onBack }) => {
     );
 };
 
-export default WeatherScreen;
+export default WeatherScreen; 

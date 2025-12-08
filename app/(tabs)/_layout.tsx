@@ -58,7 +58,7 @@ export default function TabsLayout() {
 
       <TouchableOpacity
         className="absolute top-16 right-6 w-8 h-8 rounded-full bg-gray-600 items-center justify-center"
-        onPress={() => router.push('/prompts-screens/settings')}
+        onPress={() => router.push('/settings')}
       >
         <View >
           <Ionicons name="person" size={20} color="white" />

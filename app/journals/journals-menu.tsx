@@ -1,3 +1,4 @@
+import { useAppContext } from '@/context/context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
@@ -12,37 +13,40 @@ interface Journal {
 }
 
 const initialJournals: Journal[] = [
-    { id: '1', name: 'All Entries', color: 'bg-gray-700', entries: 4 },
-    { id: '2', name: 'Journal', color: 'bg-blue-500', entries: 4 },
-    { id: '3', name: 'Journal', color: 'bg-orange-300', entries: 0 },
+    { id: '1', name: 'Journal', color: 'bg-blue-500', entries: 0 },
 ];
 
 const JournalMenu = () => {
     const router = useRouter();
-    const [journals, setJournals] = useState<Journal[]>(initialJournals);
+    const { journals, setActiveJournal } = useAppContext();
+
     const [editMode, setEditMode] = useState(false);
 
-    const handleDeleteJournal = (id: string) => {
-        setJournals((prevJournals) =>
-            prevJournals.filter((journal) => journal.id !== id)
-        );
+    const handleSelectJournal = (journal: Journal) => {
+        setActiveJournal(journal);
+        router.back();
     };
 
+
+
     const renderJournal = ({ item }: { item: Journal }) => (
-        <View className="flex-row items-center justify-between p-4 border-b border-gray-800">
-            <View className="flex-row items-center">
-                <View className={`w-10 h-12 ${item.color} rounded-md mr-4`} />
-                <View>
-                    <Text className="text-white text-lg">{item.name}</Text>
-                    <Text className="text-gray-400">{item.entries} entries</Text>
+        <TouchableOpacity onPress={() => handleSelectJournal(item)} disabled={editMode}
+        >
+            <View className="flex-row items-center justify-between p-4 border-b border-gray-800">
+                <View className="flex-row items-center">
+                    <View className={`w-10 h-12 ${item.color} rounded-md mr-4`} />
+                    <View>
+                        <Text className="text-white text-lg">{item.name}</Text>
+                        <Text className="text-gray-400">{item.entries} entries</Text>
+                    </View>
                 </View>
+                {editMode && (
+                    <TouchableOpacity onPress={() => router.push({ pathname: '/journals/journal-editor-page', params: { ...item } })}>
+                        <MaterialCommunityIcons name="dots-horizontal" size={24} color="white" />
+                    </TouchableOpacity>
+                )}
             </View>
-            {editMode && (
-                <TouchableOpacity onPress={() => router.push({ pathname: '/journals/journal-editor', params: { ...item } })}>
-                    <MaterialCommunityIcons name="dots-horizontal" size={24} color="white" />
-                </TouchableOpacity>
-            )}
-        </View>
+        </TouchableOpacity>
     );
 
     return (
