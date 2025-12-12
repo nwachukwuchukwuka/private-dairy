@@ -23,7 +23,8 @@ const JournalScreen = () => {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const { activeJournal } = useAppContext();
 
-  const activeColor = activeJournal?.color.replace('bg-', '') || '#00AEEF';
+  const activeColor = activeJournal?.color || '#00AEEF';
+
 
   const renderContent = () => {
     switch (activeTab) {
@@ -45,7 +46,7 @@ const JournalScreen = () => {
 
   return (
     <View className="flex-1">
-      <View className={`bg-${activeColor} pt-16 pb-8 px-4`}>
+      <View className={`pt-16 pb-8 px-4`} style={{ backgroundColor: activeColor }}>
         <View className="flex-row justify-between items-center mb-4">
           <TouchableOpacity onPress={() => router.push("/journals/journals-menu")}>
             <Feather name="menu" size={24} color="white" />
@@ -117,7 +118,8 @@ const JournalScreen = () => {
         {renderContent()}
       </View>
 
-      <TouchableOpacity className="absolute bottom-28 right-5 bg-[#00AEEF] w-14 h-14 rounded-full items-center justify-center"
+      <TouchableOpacity style={{ backgroundColor: activeColor }}
+        className="absolute bottom-28 right-5 w-14 h-14 rounded-full items-center justify-center"
         onPress={() => router.push('/journals/new-entry')}>
         <Feather name="plus" size={32} color="white" />
       </TouchableOpacity>

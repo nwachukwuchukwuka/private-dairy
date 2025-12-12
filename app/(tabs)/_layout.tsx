@@ -1,6 +1,4 @@
-// import { useAppState } from "@/context/context";
-import { Entypo, FontAwesome, Ionicons } from "@expo/vector-icons";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { Feather, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Tabs, useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -17,11 +15,11 @@ export default function TabsLayout() {
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: "white",
-          tabBarInactiveTintColor: "#70808d",
+          tabBarInactiveTintColor: "#3A3A3C",
           tabBarStyle: {
-            backgroundColor: "#273238",
-            borderTopWidth: 1,
-            borderTopColor: "#3a4650",
+            backgroundColor: "#1C1C1E",
+            borderTopWidth: 0.3,
+            borderTopColor: "#3A3A3C",
             position: "absolute",
             elevation: 0,
           },
@@ -32,7 +30,7 @@ export default function TabsLayout() {
           options={{
             title: "Journals",
             tabBarIcon: ({ color }) => (
-              <FontAwesome6 name="users" size={20} color={color} />
+              <Ionicons name="journal" size={24} color={color} />
             ),
           }}
         />
@@ -41,7 +39,7 @@ export default function TabsLayout() {
           options={{
             title: "Prompts",
             tabBarIcon: ({ color }) => (
-              <Entypo name="picasa" size={24} color={color} />
+              <MaterialCommunityIcons name="chat-question-outline" size={24} color={color} />
             ),
           }}
         />
@@ -50,7 +48,7 @@ export default function TabsLayout() {
           options={{
             title: "More",
             tabBarIcon: ({ color }) => (
-              <FontAwesome name="user" size={24} color={color} />
+              <Feather name="more-horizontal" size={24} color={color} />
             ),
           }}
         />

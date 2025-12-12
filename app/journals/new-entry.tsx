@@ -237,7 +237,6 @@ const NewEntryScreen = () => {
 
                                     </MenuOptions>
                                 </Menu>
-                                {/* <TouchableOpacity onPress={() => router.back()}> */}
                                 <TouchableOpacity onPress={handleDonePress}>
                                     <Text className="text-black font-semibold text-lg">Done</Text>
                                 </TouchableOpacity>
@@ -247,8 +246,7 @@ const NewEntryScreen = () => {
                             <View className="flex-1 px-4 pt-2">
                                 <View className="flex-row items-center gap-2 mb-4">
                                     <TouchableOpacity onPress={() => router.push('/new-entry-editor/move-journal')}>
-                                        {/* <Text className="text-gray-400">Journal</Text> */}
-                                        {activeJournal?.name || 'No Journal'}
+                                        <Text className="text-white">{activeJournal?.name || 'No Journal'}</Text>
                                     </TouchableOpacity>
                                     <Text className="text-gray-600">•</Text>
                                     <TouchableOpacity onPress={() => router.push('/new-entry-editor/location')}>

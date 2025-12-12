@@ -11,14 +11,15 @@ const personalSuggestions = [
 const sharedSuggestions = [
     '2025', 'Travel', 'Life Stories', 'Goals', 'Meetings', 'Vacation', 'Pregnancy', 'Our Wedding', 'Our Story'
 ];
-const colors = ['bg-orange-500', 'bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-red-500'];
+
+const colors = ['#F5A623', '#4A90E2', '#7ED321', '#BD10E0', '#D0021B'];
 
 const AddJournal = () => {
     const router = useRouter();
     const { addJournal } = useAppContext();
     const [tab, setTab] = useState<'Personal' | 'Shared'>('Personal');
     const [journalName, setJournalName] = useState('Journal');
-    const [journalColor, setJournalColor] = useState('bg-orange-500');
+    const [journalColor, setJournalColor] = useState('#F5A623');
 
     const suggestions = tab === 'Personal' ? personalSuggestions : sharedSuggestions;
 
@@ -51,7 +52,7 @@ const AddJournal = () => {
             </View>
 
             <View className="items-center mb-8">
-                <View className={`w-32 h-40 ${journalColor} rounded-lg items-center justify-center`}>
+                <View className={`w-32 h-40  rounded-lg items-center justify-center`} style={{ backgroundColor: journalColor }}>
                     {tab === 'Shared' && <MaterialCommunityIcons name="account-group-outline" size={48} color="white" />}
                 </View>
                 <Text className="text-white text-2xl mt-4">{journalName}</Text>

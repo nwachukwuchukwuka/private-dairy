@@ -60,33 +60,6 @@ const ListView = () => {
     const router = useRouter();
     const { entries, activeJournal } = useAppContext();
 
-    // const entriesByMonth = useMemo(() => {
-    //     const groupedByMonth: { [key: string]: { [key: string]: any[] } } = {};
-
-    //     entries.forEach(entry => {
-    //         const monthKey = format(entry.date, 'MMMM yyyy');
-    //         const dayKey = format(entry.date, 'dd');
-
-    //         if (!groupedByMonth[monthKey]) {
-    //             groupedByMonth[monthKey] = {};
-    //         }
-    //         if (!groupedByMonth[monthKey][dayKey]) {
-    //             groupedByMonth[monthKey][dayKey] = [];
-    //         }
-    //         groupedByMonth[monthKey][dayKey].push(entry);
-    //     });
-
-    //     return Object.keys(groupedByMonth).map(month => ({
-    //         month,
-    //         days: Object.keys(groupedByMonth[month]).map(day => ({
-    //             dayOfMonth: day,
-    //             dayOfWeek: format(groupedByMonth[month][day][0].date, 'EEE').toUpperCase(),
-    //             entries: groupedByMonth[month][day],
-    //         })).sort((a, b) => parseInt(b.dayOfMonth, 10) - parseInt(a.dayOfMonth, 10))
-    //     }));
-    // }, [entries]);
-
-
     const entriesByMonth = useMemo(() => {
         const journalEntries = entries.filter(entry => entry.journalId === activeJournal?.id);
         const groupedByMonth: { [key: string]: { [key: string]: any[] } } = {};
@@ -135,6 +108,10 @@ const ListView = () => {
                                             <TouchableOpacity
                                                 key={entry.id}
                                                 className={`flex-row items-start ${entryIndex > 0 ? 'mt-4 pt-4 border-t border-gray-800' : ''}`}
+                                                onPress={() => router.push({
+                                                    pathname: '/journals/edit-entry',
+                                                    params: { entryId: entry.id }
+                                                })}
                                             >
                                                 <View className="flex-1">
                                                     {entry.title && (

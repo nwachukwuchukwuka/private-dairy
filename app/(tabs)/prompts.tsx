@@ -1,7 +1,11 @@
+import { useAppContext } from "@/context/context";
 import { Feather, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
 import {
+  ActionSheetIOS,
+  Alert,
+  Platform,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -18,19 +22,19 @@ interface RecommendedCard {
 
 const recommendedCardsData: RecommendedCard[] = [
   {
-    id: '1',
+    id: 'gratitude',
     promptText: 'What am I grateful for today?',
     category: 'Gratitude',
     icon: <MaterialCommunityIcons name="cards-heart-outline" size={24} color="white" />,
   },
   {
-    id: '2',
+    id: 'reflection',
     promptText: 'What is one thing I learned yesterday?',
     category: 'Reflection',
     icon: <MaterialCommunityIcons name="account-question-outline" size={24} color="white" />,
   },
   {
-    id: '3',
+    id: 'fitness',
     promptText: 'How did I move my body today?',
     category: 'Fitness',
     icon: <Ionicons name="fitness-outline" size={24} color="white" />,
@@ -90,6 +94,60 @@ const promptPacksData: PromptPack[] = [
 
 const PromptsScreen = () => {
   const router = useRouter();
+  const { entries } = useAppContext();
+
+  const showActionSheet = (card: RecommendedCard) => {
+    const entryCount = entries.filter(e => e.promptText === card.promptText).length;
+    const viewEntriesTitle = `View ${entryCount} Entry(s)`;
+
+    const options = ["Cancel", "Answer Again"];
+    if (entryCount > 0) {
+      options.splice(1, 0, viewEntriesTitle);
+    }
+
+    const cancelButtonIndex = options.indexOf("Cancel");
+
+    if (Platform.OS === "ios") {
+      ActionSheetIOS.showActionSheetWithOptions(
+        { options, cancelButtonIndex },
+        (buttonIndex) => {
+          const selectedOption = options[buttonIndex];
+          if (selectedOption === viewEntriesTitle) {
+            router.push({
+              pathname: '/prompts-screens/prompt-answers',
+              params: { promptText: card.promptText }
+            });
+          } else if (selectedOption === "Answer Again") {
+            router.push({
+              pathname: '/prompts-screens/prompt-screen-new-entry',
+              params: { prefilledPrompt: card.promptText }
+            });
+          }
+        }
+      );
+    } else {
+      const alertButtons: any[] = [
+        {
+          text: "Answer Again",
+          onPress: () => router.push({
+            pathname: '/prompts-screens/prompt-screen-new-entry',
+            params: { prefilledPrompt: card.promptText }
+          }),
+        },
+        { text: "Cancel", style: "cancel" },
+      ];
+      if (entryCount > 0) {
+        alertButtons.unshift({
+          text: viewEntriesTitle,
+          onPress: () => router.push({
+            pathname: '/prompts-screens/prompt-answers',
+            params: { promptText: card.promptText }
+          }),
+        });
+      }
+      Alert.alert("Choose an option", "", alertButtons);
+    }
+  };
   return (
     <SafeAreaView className="flex-1 bg-black">
 
@@ -123,23 +181,25 @@ const PromptsScreen = () => {
               <View
                 key={card.id}
                 className="w-80 mr-4 p-3 bg-black"
-                style={{
-                  shadowColor: '#FFFFFF',
-                  shadowOffset: { width: 0, height: 6 },
-                  shadowOpacity: 0.35,
-                  shadowRadius: 7,
-                  elevation: 10,
-                }}
+              // style={{
+              //   shadowColor: '#FFFFFF',
+              //   shadowOffset: { width: 0, height: 6 },
+              //   shadowOpacity: 0.35,
+              //   shadowRadius: 7,
+              //   elevation: 10,
+              // }}
               >
-                <View className="bg-[#34B4E8] h-48 rounded-xl p-4 justify-center items-center relative">
+                <TouchableOpacity className="bg-[#34B4E8] h-48 rounded-xl p-4 justify-center items-center relative"
+                  onPress={() => showActionSheet(card)}
+                >
                   <TouchableOpacity className="absolute top-3 right-3">
                     <Ionicons name="refresh-circle" size={24} color="white" />
                   </TouchableOpacity>
                   <Text className="text-white text-xl text-center font-semibold">
                     {card.promptText}
                   </Text>
-                </View>
-                <TouchableOpacity className="flex-row items-center mt-4">
+                </TouchableOpacity>
+                <TouchableOpacity className="flex-row items-center mt-4" onPress={() => router.push(`/prompts-screens/${card.id}`)}>
                   {card.icon}
                   <Text className="text-white text-lg ml-3 flex-1">
                     {card.category}

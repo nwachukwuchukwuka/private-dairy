@@ -11,7 +11,6 @@ export interface PromptPack {
   prompts: string[];
 }
 
-
 export interface PromptPack {
   id: string;
   name: string;
@@ -187,3 +186,24 @@ export const settingsData: SettingsItem[][] = [
   ],
 ];
 
+
+export const COLORS = [
+  { name: 'Sky Blue', hex: '#5AC8FA', isPremium: false },
+  { name: 'Aqua', hex: '#44DBB9', isPremium: false },
+  { name: 'Lime Green', hex: '#7ED321', isPremium: false },
+  { name: 'Gold', hex: '#FFC900', isPremium: false },
+  { name: 'Pink', hex: '#FF69B4', isPremium: false },
+  { name: 'Coral', hex: '#FF5E5E', isPremium: false },
+  { name: 'Royal Blue', hex: '#007AFF', isPremium: false },
+  { name: 'Slate Gray', hex: '#A9A9A9', isPremium: false },
+  { name: 'Tan', hex: '#D1B49A', isPremium: false },
+  { name: 'Orange', hex: '#FFA500', isPremium: false },
+  { name: 'Lavender', hex: '#AF52DE', isPremium: false },
+  { name: 'Bright Red', hex: '#FF2D55', isPremium: false },
+  { name: 'Indigo', hex: '#5856D6', isPremium: true },
+  { name: 'Steel Blue', hex: '#5E7D9A', isPremium: true },
+  { name: 'Chartreuse', hex: '#C4D600', isPremium: true },
+  { name: 'Magenta', hex: '#E91E63', isPremium: true },
+  { name: 'Purple', hex: '#9C27B0', isPremium: true },
+  { name: 'Deep Purple', hex: '#673AB7', isPremium: true },
+];

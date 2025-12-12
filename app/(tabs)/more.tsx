@@ -1,15 +1,19 @@
+import MoreStreak from "@/components/MoreStreak";
 import { Feather, Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from 'expo-image-picker';
+import * as MediaLibrary from 'expo-media-library';
 import { Href, useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import {
+  Alert,
+  Image,
+  Pressable,
   ScrollView,
   Text,
   TouchableOpacity,
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-
 
 interface QuickStartItem {
   name: string;
@@ -40,11 +44,63 @@ const quickStartItems: QuickStartItem[] = [
   },
 ];
 
-const streakDays = [12, 13, 14, 15, 16, 17, 18];
-const currentDay = 18;
 
 const TodayScreen: React.FC = () => {
   const router = useRouter();
+  const [photos, setPhotos] = useState<MediaLibrary.Asset[]>([]);
+
+
+  const pickImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert(
+        "Permission needed",
+        "Sorry, we need camera roll permissions to make this work!"
+      );
+      return;
+    }
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+      aspect: [9, 16],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      console.log("file selected", result.assets[0].uri);
+
+    }
+  };
+
+  // useEffect(() => {
+  //   const getPhotos = async () => {
+  //     const { status } = await MediaLibrary.requestPermissionsAsync();
+  //     if (status !== 'granted') {
+  //       console.log('Media Library permission not granted');
+  //       return;
+  //     }
+
+  //     const assets = await MediaLibrary.getAssetsAsync({
+  //       first: 4,
+  //       mediaType: 'photo',
+  //       sortBy: ['creationTime'],
+  //     });
+
+  //     setPhotos(assets.assets);
+  //   };
+
+  //   getPhotos();
+  // }, []);
+
+  const handleOnThisDayPress = (year: string) => {
+    const dateString = `${year}-11-18T12:00:00.000Z`;
+    router.push({
+      pathname: '/more/day-view',
+      params: { initialDate: dateString }
+    });
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-black">
       <ScrollView contentContainerStyle={{ paddingBottom: 40, paddingTop: 60 }}>
@@ -52,7 +108,7 @@ const TodayScreen: React.FC = () => {
           <View className="mb-10">
             <View className="flex-row justify-between items-center mb-1">
               <Text className="text-white text-2xl font-bold">Quick Start</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => router.push("/more/quick-start")}>
                 <Text className="text-blue-400 text-base">See more</Text>
               </TouchableOpacity>
             </View>
@@ -85,7 +141,7 @@ const TodayScreen: React.FC = () => {
                   </Text>
                 </View>
               </View>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => router.push("/more/on-this-day")}>
                 <Text className="text-blue-400 text-base">See more</Text>
               </TouchableOpacity>
             </View>
@@ -94,15 +150,15 @@ const TodayScreen: React.FC = () => {
               next year.
             </Text>
             <View className="flex-row gap-3">
-              <TouchableOpacity className="bg-[#E5E5EA] flex-1 py-3 rounded-xl items-center justify-center">
+              <Pressable onPress={() => handleOnThisDayPress('2024')} className="bg-[#E5E5EA] flex-1 py-3 rounded-xl items-center justify-center">
                 <Text className="text-black font-semibold text-base">2024</Text>
-              </TouchableOpacity>
-              <TouchableOpacity className="bg-[#E5E5EA] flex-1 py-3 rounded-xl items-center justify-center">
+              </Pressable>
+              <Pressable onPress={() => handleOnThisDayPress('2023')} className="bg-[#E5E5EA] flex-1 py-3 rounded-xl items-center justify-center">
                 <Text className="text-black font-semibold text-base">2023</Text>
-              </TouchableOpacity>
-              <TouchableOpacity className="bg-[#E5E5EA] flex-1 py-3 rounded-xl items-center justify-center">
+              </Pressable>
+              <Pressable onPress={() => handleOnThisDayPress('2022')} className="bg-[#E5E5EA] flex-1 py-3 rounded-xl items-center justify-center">
                 <Text className="text-black font-semibold text-base">2022</Text>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </View>
 
@@ -111,30 +167,46 @@ const TodayScreen: React.FC = () => {
               <Text className="text-white text-2xl font-bold">
                 Daily Prompt
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => router.push('/more/daily-prompts')}>
                 <Text className="text-blue-400 text-base">See more</Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity className="bg-[#34B4E8] rounded-2xl p-6 items-center justify-center min-h-[120px]">
+            <Pressable className="bg-[#34B4E8] rounded-2xl p-6 items-center justify-center min-h-[120px]">
               <Text className="text-white text-2xl font-semibold text-center">
                 What is one way I can be generous today?
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
-
           <View className="mb-10">
-            <Text className="text-white text-2xl font-bold mb-2">
-              Add from Photo Library
-            </Text>
-            <Text className="text-gray-400 mb-4">
-              Photo library access is required to show photos from your photo
-              library.
-            </Text>
-            <TouchableOpacity className="bg-[#E5E5EA] py-4 rounded-xl items-center justify-center">
-              <Text className="text-blue-500 font-bold text-base">
-                Enable Photo Library Access
+            <View className="flex-row items-center justify-between mb-2">
+              <Text className="text-white text-2xl font-bold">
+                Add from Photo Library
               </Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={pickImage}>
+                <Text className="text-blue-400 text-base">
+                  Select
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {photos.length > 0 ? (
+              <View className="flex-row justify-between">
+                {photos.map(photo => (
+                  <TouchableOpacity
+                    key={photo.id}
+                  >
+                    <Image
+                      source={{ uri: photo.uri }}
+                      className="w-20 h-20 rounded-lg"
+                    />
+                  </TouchableOpacity>
+                ))}
+              </View>
+            ) : (
+              <Text className="text-gray-400">
+                No recent photos found.
+              </Text>
+            )}
           </View>
 
           <View className="mb-10">
@@ -154,43 +226,7 @@ const TodayScreen: React.FC = () => {
             </TouchableOpacity>
           </View>
 
-          <View className="mb-10">
-            <View className="flex-row justify-between items-center mb-3">
-              <Text className="text-white text-2xl font-bold">Streak</Text>
-              <TouchableOpacity>
-                <Text className="text-blue-400 text-base">See more</Text>
-              </TouchableOpacity>
-            </View>
-            <View className="bg-[#1C1C1E] rounded-2xl p-4 pt-5">
-              <View className="flex-row mb-6">
-                <View className="flex-1 items-center border-r border-gray-600">
-                  <Text className="text-gray-400 text-sm mb-1">
-                    Current Streak
-                  </Text>
-                  <Text className="text-white text-3xl font-semibold">0</Text>
-                </View>
-                <View className="flex-1 items-center">
-                  <Text className="text-gray-400 text-sm mb-1">
-                    Longest Streak
-                  </Text>
-                  <Text className="text-white text-3xl font-semibold">0</Text>
-                </View>
-              </View>
-              <View className="flex-row justify-around items-end">
-                {streakDays.map((day) => (
-                  <View key={day} className="items-center gap-2 relative">
-                    <View className="w-8 h-8 rounded-full border-2 border-gray-600" />
-                    <Text className="text-gray-400">{day}</Text>
-                    {day === currentDay && (
-                      <View className="w-1.5 h-1.5 bg-blue-400 rounded-full absolute -bottom-2" />
-                    )}
-                  </View>
-                ))}
-              </View>
-            </View>
-          </View>
-
-
+          <MoreStreak />
         </View>
       </ScrollView>
     </SafeAreaView>

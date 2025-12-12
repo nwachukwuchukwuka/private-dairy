@@ -1,5 +1,4 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
-
 export interface JournalEntry {
     id: string;
     journalId: string;
@@ -7,6 +6,7 @@ export interface JournalEntry {
     metadata: string;
     date: Date;
     imageUri?: string;
+    promptText?: string;
 }
 
 export interface Journal {
@@ -14,11 +14,15 @@ export interface Journal {
     name: string;
     color: string;
     entries: number;
+    description?: string;
 }
 
 interface AppContextType {
     entries: JournalEntry[];
     addEntry: (entry: Omit<JournalEntry, 'id'>) => void;
+
+    updateEntry: (entryId: string, updates: Partial<Omit<JournalEntry, 'id'>>) => void;
+    deleteEntry: (entryId: string) => void;
 
     journals: Journal[];
     addJournal: (journal: Omit<Journal, 'id' | 'entries'>) => void;
@@ -28,12 +32,13 @@ interface AppContextType {
 
     updateJournal: (journalId: string, updates: Partial<Omit<Journal, 'id'>>) => void;
     deleteJournal: (journalId: string) => void;
+
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const initialJournals: Journal[] = [
-    { id: '1', name: 'Journal', color: 'bg-blue-500', entries: 0 },
+    { id: '1', name: 'Journal', color: '#00AEEF', entries: 0 },
 ];
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
@@ -67,6 +72,36 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     };
 
 
+    const updateEntry = (entryId: string, updates: Partial<Omit<JournalEntry, 'id'>>) => {
+        setEntries(prevEntries =>
+            prevEntries.map(entry =>
+                entry.id === entryId
+                    ? { ...entry, ...updates }
+                    : entry
+            )
+        );
+    };
+
+    // --- CHANGE 3: Implement the deleteEntry function ---
+    const deleteEntry = (entryId: string) => {
+        // Find the entry to get its journalId
+        const entryToDelete = entries.find(e => e.id === entryId);
+        if (entryToDelete) {
+            // Decrement the entry count of the corresponding journal
+            setJournals(prevJournals =>
+                prevJournals.map(journal =>
+                    journal.id === entryToDelete.journalId
+                        ? { ...journal, entries: Math.max(0, journal.entries - 1) } // Prevent negative counts
+                        : journal
+                )
+            );
+        }
+        // Remove the entry from the list
+        setEntries(prevEntries => prevEntries.filter(entry => entry.id !== entryId));
+    };
+
+
+
     const addJournal = (newJournalData: Omit<Journal, 'id' | 'entries'>) => {
         const newJournal: Journal = {
             ...newJournalData,
@@ -98,7 +133,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <AppContext.Provider value={{ entries, addEntry, journals, addJournal, activeJournal, setActiveJournal, updateJournal, deleteJournal }}>
+        <AppContext.Provider value={{ entries, addEntry, updateEntry, deleteEntry, journals, addJournal, activeJournal, setActiveJournal, updateJournal, deleteJournal }}>
             {children}
         </AppContext.Provider>
     );

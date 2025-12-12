@@ -25,6 +25,31 @@ export default function MoreLayout() {
 
                 }}
             />
+            <Stack.Screen
+                name="quick-start"
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+
+            <Stack.Screen
+                name="daily-prompts"
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="on-this-day"
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="on-this-day-detail"
+                options={{
+                    presentation: 'modal',
+                }}
+            />
         </Stack>
     );
 }
