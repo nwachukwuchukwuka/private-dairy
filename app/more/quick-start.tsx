@@ -39,8 +39,7 @@ const QuickStartScreen = () => {
 
     return (
         <SafeAreaView className="flex-1 bg-[#1C1C1E]">
-            {/* <View className="w-10 h-1.5 bg-[#3A3A3C] rounded-full self-center my-3" /> */}
-            <View className="flex-row items-center justify-between p-4 pt-0">
+            <View className="flex-row items-center justify-between p-4">
                 <Text className="text-white text-2xl font-bold">Quick Start</Text>
                 <View className="flex-row items-center gap-4">
                     <TouchableOpacity

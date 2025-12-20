@@ -41,7 +41,7 @@ const NotificationsScreen = () => {
                     <Text className="text-blue-500 text-lg">New Reminder</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => router.push('/settings/reminders/advanced')} className="bg-[#1C1C1E] rounded-lg flex-row justify-between items-center p-4">
+                <TouchableOpacity onPress={() => router.push('/settings/reminders/reminders-advanced')} className="bg-[#1C1C1E] rounded-lg flex-row justify-between items-center p-4">
                     <Text className="text-white text-lg">Advanced</Text>
                     <Ionicons name="chevron-forward" size={20} color="gray" />
                 </TouchableOpacity>

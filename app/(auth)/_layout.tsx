@@ -13,7 +13,8 @@ export default function AuthLayout() {
                     presentation: "modal",
                 }}
             />
-
+            <Stack.Screen name="reset-password" />
+            <Stack.Screen name="check-email" />
 
             {/* <Stack.Screen
                 name="collections-screen"

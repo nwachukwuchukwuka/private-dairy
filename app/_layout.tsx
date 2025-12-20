@@ -138,13 +138,18 @@ export default function RootLayout() {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             className="flex-1"
           >
-
             <Stack
               screenOptions={{
                 headerShown: false,
               }}
             >
               <Stack.Screen name="(tabs)" />
+              <Stack.Screen
+                name="onboarding-screen"
+                options={{
+                  animation: "fade",
+                }}
+              />
               <Stack.Screen
                 name="journals/entry-detail"
                 options={{

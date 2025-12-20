@@ -18,7 +18,6 @@ const OnThisDayScreen = () => {
         ).length;
     }, [entries, today]);
 
-    // Create a list of previous years to display as buttons
     // const previousYears = [
     //     format(today, 'yyyy'), // Current Year
     //     format(today, 'yyyy') - 1, // Last Year
@@ -27,9 +26,7 @@ const OnThisDayScreen = () => {
 
     const previousYears = useMemo(() => [
         format(today, 'yyyy'),
-
         (parseInt(format(today, 'yyyy'), 10) - 1).toString(),
-
     ], [today]);
     return (
         <SafeAreaView className="flex-1 bg-black">

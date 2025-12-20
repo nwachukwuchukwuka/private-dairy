@@ -1,4 +1,4 @@
-import { Stack, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
@@ -7,15 +7,15 @@ const AdvancedScreen = () => {
 
     return (
         <View className="flex-1 bg-black">
-            <Stack.Screen
-                options={{
-                    headerStyle: { backgroundColor: '#1C1C1E' },
-                    headerTitle: () => <Text className="text-white font-bold text-lg">Advanced Options</Text>,
-                    headerBackVisible: true,
-                    headerBackTitle: "Back",
-                    headerTintColor: '#007AFF',
-                }}
-            />
+            <View className="bg-[#1C1C1E] flex-row justify-between items-center p-3">
+                <TouchableOpacity onPress={() => router.back()}>
+                    <Text className="text-blue-500 text-lg">Cancel</Text>
+                </TouchableOpacity>
+                <Text className="text-white font-bold text-lg">Advanced Options</Text>
+                <TouchableOpacity>
+                    <Text className="text-blue-500 text-lg font-bold">Save</Text>
+                </TouchableOpacity>
+            </View>
             <ScrollView className="p-4 pt-8">
                 <View className="bg-[#1C1C1E] rounded-lg">
                     <TouchableOpacity className="p-3 border-b border-gray-700">

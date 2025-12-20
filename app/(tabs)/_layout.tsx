@@ -1,13 +1,21 @@
+import SplashScreen from "@/components/SplashScreen";
+import { useAppContext } from "@/context/context";
 import { Feather, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { Tabs, useRouter } from "expo-router";
+import { Redirect, Tabs, useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 
 export default function TabsLayout() {
   const router = useRouter();
-  //   const { isAuthenticated } = useAppState();
+  const { isAuthenticated, isShowingSplash } = useAppContext();
 
-  //   if (!isAuthenticated) return <Redirect href="/onboarding" />;
+
+  if (isShowingSplash) {
+    return <SplashScreen />;
+  }
+
+  if (!isAuthenticated) return <Redirect href="/onboarding-screen" />;
+
   return (
 
     <View className="flex-1">
@@ -54,14 +62,16 @@ export default function TabsLayout() {
         />
       </Tabs>
 
-      <TouchableOpacity
-        className="absolute top-16 right-6 w-8 h-8 rounded-full bg-gray-600 items-center justify-center"
-        onPress={() => router.push('/settings')}
-      >
-        <View >
-          <Ionicons name="person" size={20} color="white" />
-        </View>
-      </TouchableOpacity>
+      {!isShowingSplash && (
+        <TouchableOpacity
+          className="absolute top-16 right-6 w-8 h-8 rounded-full bg-gray-600 items-center justify-center"
+          onPress={() => router.push('/settings')}
+        >
+          <View >
+            <Ionicons name="person" size={20} color="white" />
+          </View>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }

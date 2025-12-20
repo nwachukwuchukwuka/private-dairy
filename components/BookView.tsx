@@ -1,13 +1,21 @@
+import { TabName } from '@/app/(tabs)';
 import { useAppContext } from '@/context/context';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { differenceInCalendarDays, isSameDay } from 'date-fns';
 import { useRouter } from 'expo-router';
-import React, { useMemo } from 'react';
-import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { Alert, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
-const BookView = () => {
+interface BookViewProps {
+    setActiveTab: (tabName: TabName) => void;
+}
+
+const BookView: React.FC<BookViewProps> = ({ setActiveTab }) => {
+
     const router = useRouter();
     const { entries, activeJournal } = useAppContext();
+    const [showCustomizeCard, setShowCustomizeCard] = useState(true);
+
 
     const stats = useMemo(() => {
         if (!activeJournal) {
@@ -97,35 +105,36 @@ const BookView = () => {
                         </TouchableOpacity>
                         <View className="flex-1 gap-3 overflow-hidden">
                             <View className="flex-row gap-3 h-[70px] w-full">
-                                <View className="bg-[#2C2C2E]  rounded-xl items-center justify-center w-[47%]">
+                                <Pressable onPress={() => setActiveTab('List')} className="bg-[#2C2C2E]  rounded-xl items-center justify-center w-[47%]">
                                     <Text className="text-gray-400 text-xs font-bold">
                                         ENTRIES
                                     </Text>
                                     <Text className="text-white text-2xl font-semibold">
                                         {stats.entryCount}
                                     </Text>
-                                </View>
-                                <View className="bg-[#2C2C2E]  rounded-xl items-center justify-center w-[47%]">
+                                </Pressable>
+                                <Pressable onPress={() => setActiveTab('Media')} className="bg-[#2C2C2E]  rounded-xl items-center justify-center w-[47%]">
                                     <Text className="text-gray-400 text-xs font-bold">
                                         MEDIA
                                     </Text>
                                     <Text className="text-white text-2xl font-semibold">
                                         {stats.mediaCount}
                                     </Text>
-                                </View>
+                                </Pressable>
                             </View>
 
 
                             <View className="flex-row gap-3 h-[70px]  w-full">
-                                <View className="bg-[#2C2C2E]  rounded-xl items-center justify-center w-[47%]">
+                                <Pressable onPress={() => setActiveTab('Calendar')}
+                                    className="bg-[#2C2C2E]  rounded-xl items-center justify-center w-[47%]">
                                     <Text className="text-gray-400 text-xs font-bold">
                                         DAYS
                                     </Text>
                                     <Text className="text-white text-2xl font-semibold">
                                         {stats.dayCount}
                                     </Text>
-                                </View>
-                                <View className="bg-[#2C2C2E]  rounded-xl items-center justify-center w-[47%]">
+                                </Pressable>
+                                <Pressable onPress={() => router.push('/more/on-this-day')} className="bg-[#2C2C2E]  rounded-xl items-center justify-center w-[47%]">
                                     <Text className="text-gray-400 text-xs font-bold">
                                         ON THIS DAY
                                     </Text>
@@ -133,31 +142,33 @@ const BookView = () => {
                                         {stats.onThisDayCount}
 
                                     </Text>
-                                </View>
+                                </Pressable>
                             </View>
                         </View>
                     </View>
                 </View>
+                {showCustomizeCard && (
+                    <View className="bg-[#2C2C2E] p-4 rounded-xl mb-8">
+                        <View className="flex-row items-start">
+                            <View className="mr-3">
+                                <Ionicons name="options-outline" size={28} color="white" />
+                            </View>
+                            <View className="flex-1">
+                                <Text className="text-white text-lg font-bold">
+                                    Customize Your Journal
+                                </Text>
+                                <Text className="text-gray-400">
+                                    Customize your journal or configure it to your journaling
+                                    style.
+                                </Text>
+                            </View>
 
-                <View className="bg-[#2C2C2E] p-4 rounded-xl mb-8">
-                    <View className="flex-row items-start">
-                        <View className="mr-3">
-                            <Ionicons name="options-outline" size={28} color="white" />
+                            <TouchableOpacity onPress={() => setShowCustomizeCard(false)}>
+                                <Feather name="x" size={24} color="gray" />
+                            </TouchableOpacity>
                         </View>
-                        <View className="flex-1">
-                            <Text className="text-white text-lg font-bold">
-                                Customize Your Journal
-                            </Text>
-                            <Text className="text-gray-400">
-                                Customize your journal or configure it to your journaling
-                                style.
-                            </Text>
-                        </View>
-                        <TouchableOpacity>
-                            <Feather name="x" size={24} color="gray" />
-                        </TouchableOpacity>
                     </View>
-                </View>
+                )}
 
                 <View className="items-center">
                     <TouchableOpacity className="bg-[#2C2C2E] py-1 px-8 rounded-full" onPress={handleEditPress}>

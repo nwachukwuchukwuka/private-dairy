@@ -50,6 +50,11 @@ export default function MoreLayout() {
                     presentation: 'modal',
                 }}
             />
+            <Stack.Screen
+                name="templates"
+                options={{ presentation: 'modal' }}
+            />
+            <Stack.Screen name="new-template" />
         </Stack>
     );
 }

@@ -101,6 +101,21 @@ const TodayScreen: React.FC = () => {
     });
   };
 
+  const showTemplatesAlert = () => {
+    Alert.alert(
+      "My templates",
+      "Your template collection is empty. Add or create a new one to get started.",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "+ Add a template",
+          onPress: () => router.push('/more/templates'),
+        },
+      ]
+    );
+  };
+
+
   return (
     <SafeAreaView className="flex-1 bg-black">
       <ScrollView contentContainerStyle={{ paddingBottom: 40, paddingTop: 60 }}>
@@ -116,7 +131,7 @@ const TodayScreen: React.FC = () => {
               Instantly create an entry with one of the following:
             </Text>
             <View className="bg-[#1C1C1E] rounded-2xl p-4 flex-row justify-around">
-              {quickStartItems.map((item) => (
+              {/* {quickStartItems.map((item) => (
                 <TouchableOpacity
                   key={item.name}
                   className="items-center justify-between h-16"
@@ -125,7 +140,27 @@ const TodayScreen: React.FC = () => {
                   {item.icon}
                   <Text className="text-white text-sm">{item.name}</Text>
                 </TouchableOpacity>
-              ))}
+              ))} */}
+              {quickStartItems.map((item) => {
+                // Find the "Templates" item to attach the alert
+                const isTemplates = item.name === 'Templates';
+                return (
+                  <TouchableOpacity
+                    key={item.name}
+                    className="items-center justify-between h-16"
+                    onPress={() => {
+                      if (isTemplates) {
+                        showTemplatesAlert();
+                      } else if (item.route) {
+                        router.push(item.route);
+                      }
+                    }}
+                  >
+                    {item.icon}
+                    <Text className="text-white text-sm">{item.name}</Text>
+                  </TouchableOpacity>
+                );
+              })}
             </View>
           </View>
 

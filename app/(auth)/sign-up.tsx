@@ -1,22 +1,26 @@
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SignUp = () => {
     const router = useRouter();
 
     return (
         <SafeAreaView className="flex-1 bg-black">
-            <View className="flex-1 justify-center p-6">
-                <Text className="text-white text-3xl font-bold text-center mb-2">
+            <View className="py-4 bg-[#1C1C1E]">
+                <Text className="text-white text-xl font-bold text-center">
                     Sign Up
                 </Text>
-                <Text className="text-gray-400 text-lg text-center mb-12">
+            </View>
+            <View className="flex-1 p-6">
+
+                <Text className="text-gray-300 text-lg text-center mb-12">
                     Create an account to keep your memories safe.
                 </Text>
 
-                <TouchableOpacity className="bg-white rounded-md h-12 flex-row justify-center items-center mb-4">
+                <TouchableOpacity className="bg-white rounded-md h-14 flex-row justify-center items-center mb-4">
                     <Ionicons name="logo-apple" size={22} color="black" className="mr-2" />
                     <Text className="text-black font-semibold text-lg">
                         Continue with Apple
@@ -25,18 +29,18 @@ const SignUp = () => {
 
                 <TouchableOpacity
                     onPress={() => router.push('/create-account')}
-                    className="bg-gray-700 rounded-md h-12 flex-row justify-center items-center mb-12"
+                    className="bg-white rounded-md h-14 flex-row justify-center items-center mb-12"
                 >
-                    <MaterialCommunityIcons name="email" size={22} color="white" className="mr-2" />
-                    <Text className="text-white font-semibold text-lg">
+                    <MaterialCommunityIcons name="email" size={22} color="black" className="mr-2" />
+                    <Text className="text-black font-semibold text-lg">
                         Continue with Email
                     </Text>
                 </TouchableOpacity>
 
-                <Text className="text-gray-500 text-center text-xs">
+                <Text className="text-gray-500 text-center text-sm">
                     Your use of Day One is subject to our{' '}
-                    <Text className="text-blue-500 underline">Terms</Text> and{' '}
-                    <Text className="text-blue-500 underline">Privacy Policy</Text>.
+                    <Text className=" underline">Terms</Text> and{' '}
+                    <Text className=" underline">Privacy Policy</Text>.
                 </Text>
             </View>
         </SafeAreaView>

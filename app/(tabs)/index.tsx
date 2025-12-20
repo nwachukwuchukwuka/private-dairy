@@ -15,13 +15,13 @@ import {
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from "react-native-popup-menu";
 import FilterScreen from "../journals/filter-screen";
 
-type TabName = "List" | "Calendar" | "Media" | "Map" | "Book";
+export type TabName = "List" | "Calendar" | "Media" | "Map" | "Book";
 
 const JournalScreen = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabName>("Book");
   const [isFilterVisible, setIsFilterVisible] = useState(false);
-  const { activeJournal } = useAppContext();
+  const { activeJournal, isShowingSplash, isAuthenticated } = useAppContext();
 
   const activeColor = activeJournal?.color || '#00AEEF';
 
@@ -29,7 +29,7 @@ const JournalScreen = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "Book":
-        return <BookView />;
+        return <BookView setActiveTab={setActiveTab} />;
       case "List":
         return <ListView />;
       case "Calendar":
@@ -44,6 +44,8 @@ const JournalScreen = () => {
   };
 
 
+
+
   return (
     <View className="flex-1">
       <View className={`pt-16 pb-8 px-4`} style={{ backgroundColor: activeColor }}>
@@ -51,12 +53,15 @@ const JournalScreen = () => {
           <TouchableOpacity onPress={() => router.push("/journals/journals-menu")}>
             <Feather name="menu" size={24} color="white" />
           </TouchableOpacity>
-          <View className="flex-row items-center gap-8 mr-16  ">
-            <TouchableOpacity onPress={() => router.push("/sign-in")}>
-              <Text className="text-white text-xl">
-                Sign In
-              </Text>
-            </TouchableOpacity>
+          <View className="flex-row items-center gap-8 mr-16">
+            {!isAuthenticated && (
+              <TouchableOpacity onPress={() => router.push("/sign-in")}>
+                <Text className="text-white text-xl">
+                  Sign In
+                </Text>
+              </TouchableOpacity>
+            )}
+
             <TouchableOpacity onPress={() => setIsFilterVisible(true)}>
               <Feather name="search" size={24} color="white" />
             </TouchableOpacity>

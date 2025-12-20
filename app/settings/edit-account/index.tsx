@@ -69,7 +69,7 @@ const EditAccountScreen = () => {
                     <Text className="text-white text-lg">Sign Out</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => router.push('/settings/advanced')} className="bg-[#1C1C1E] rounded-lg p-4 mt-4 flex-row justify-between items-center">
+                <TouchableOpacity onPress={() => router.push('/settings/edit-account/advanced')} className="bg-[#1C1C1E] rounded-lg p-4 mt-4 flex-row justify-between items-center">
                     <Text className="text-white text-lg">Advanced</Text>
                     <Ionicons name="chevron-forward" size={20} color="gray" />
                 </TouchableOpacity>

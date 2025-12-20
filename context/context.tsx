@@ -33,6 +33,12 @@ interface AppContextType {
     updateJournal: (journalId: string, updates: Partial<Omit<Journal, 'id'>>) => void;
     deleteJournal: (journalId: string) => void;
 
+    isShowingSplash: boolean;
+    setIsShowingSplash: React.Dispatch<React.SetStateAction<boolean>>;
+
+    isAuthenticated: boolean;
+    setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -45,6 +51,10 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     const [entries, setEntries] = useState<JournalEntry[]>([]);
     const [journals, setJournals] = useState<Journal[]>(initialJournals);
     const [activeJournal, setActiveJournal] = useState<Journal | null>(initialJournals[0]);
+    const [isShowingSplash, setIsShowingSplash] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+
 
 
 
@@ -133,7 +143,11 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <AppContext.Provider value={{ entries, addEntry, updateEntry, deleteEntry, journals, addJournal, activeJournal, setActiveJournal, updateJournal, deleteJournal }}>
+        <AppContext.Provider value={{
+            entries, addEntry, updateEntry, deleteEntry, journals, addJournal, activeJournal, setActiveJournal, updateJournal, deleteJournal, isShowingSplash,
+            setIsShowingSplash, isAuthenticated,
+            setIsAuthenticated,
+        }}>
             {children}
         </AppContext.Provider>
     );

@@ -1,74 +1,85 @@
-import { Entypo, Ionicons } from '@expo/vector-icons';
+import { useAppContext } from '@/context/context';
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function App() {
+const HeatmapSquare = ({ color = 'bg-gray-800' }: { color?: string }) => (
+    <View className={`w-4 h-4 ${color} rounded-sm m-px`} />
+);
+
+const StreakScreen = () => {
     const router = useRouter();
+    const { journals } = useAppContext();
+
+    const mainHeatmapData = Array.from({ length: 7 * 20 });
+    const journalHeatmapData = Array.from({ length: 24 });
+
     return (
-        <SafeAreaView className="flex-1 bg-[#121212] px-5">
-            <View className="flex-row justify-between items-center mb-8">
+        <SafeAreaView className="flex-1 bg-[#1C1C1E]">
+            <View className="flex-row justify-between items-center mb-6 px-4 pt-4">
                 <TouchableOpacity onPress={() => router.back()}>
-                    <Ionicons name="close" size={24} color="white" />
+                    <Ionicons name="close" size={28} color="white" />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <Entypo name="share-alternative" size={24} color="white" />
+                    <Ionicons name="share-outline" size={24} color="white" />
                 </TouchableOpacity>
             </View>
 
-            <View className="items-center mb-10">
-                <View className="items-center">
-                    <Text className="text-gray-500 text-sm tracking-widest uppercase">Day One</Text>
-                    <Text className="text-white text-6xl font-bold mt-2">0 Days</Text>
-                    <View className="flex-row items-center mt-2">
-                        <Text className="text-gray-400 text-lg ml-2">Journal Streak</Text>
+            <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
+                <View className="items-center mb-8">
+                    <Text className="text-gray-400 text-lg">🌿</Text>
+                    <Text className="text-gray-400 text-sm tracking-[6px] my-1">DAY ONE</Text>
+                    <Text className="text-white text-6xl font-bold">5 Days</Text>
+                    <Text className="text-gray-400 text-xs tracking-[2px] mt-1">
+                        JOURNAL <Text className="text-orange-400">🔥</Text> STREAK
+                    </Text>
+                    <Text style={{ transform: [{ rotate: "180deg" }] }} className="text-gray-400 text-lg">🌿</Text>
+                </View>
+
+                <View className="flex-row px-4 mb-10">
+                    <View className="justify-around mr-2">
+                        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, i) => (
+                            <Text key={i} className="text-blue-300 text-xs">{day}</Text>
+                        ))}
+                    </View>
+                    <View className="flex-row flex-wrap">
+                        {mainHeatmapData.map((_, i) => (
+                            <HeatmapSquare key={i} color={i > 130 ? 'bg-blue-400' : 'bg-gray-800'} />
+                        ))}
                     </View>
                 </View>
 
-                <View className="absolute -top-8 opacity-30">
-                    <Text className="text-gray-600 text-6xl">❧</Text>
+                <View className="px-4 space-y-6 mb-10">
+                    {journals.map(journal => (
+                        <View key={journal.id}>
+                            <View className="flex-row justify-between items-baseline mb-2">
+                                <Text style={{ color: journal.color }} className="text-lg font-bold">{journal.name}</Text>
+                                <Text className="text-gray-500">{journal.entries}</Text>
+                            </View>
+                            <View className="flex-row flex-wrap">
+                                {journalHeatmapData.map((_, i) => (
+                                    <HeatmapSquare key={i} color={i > 15 && i % 4 !== 0 ? `bg-[${journal.color}]` : 'bg-gray-800'} />
+                                ))}
+                            </View>
+                        </View>
+                    ))}
                 </View>
-            </View>
 
-            <View className="mb-12">
-                <View className="flex-row justify-between mb-3 px-2">
-                    {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
-                        <Text key={index} className="text-gray-500 text-xs font-medium w-9 text-center">
-                            {day}
+                <View className="px-4">
+                    <View className="bg-gray-800 rounded-lg p-4">
+                        <Text className="text-gray-400 text-center">
+                            Consecutive days with an entry created
                         </Text>
-                    ))}
+                        <Text className="text-gray-400 text-center mt-2">
+                            <Text className="text-orange-400">🔥</Text> = Entry created today
+                        </Text>
+                    </View>
                 </View>
-
-                <View className="flex-row flex-wrap">
-                    {Array.from({ length: 35 }, (_, i) => (
-                        <View
-                            key={i}
-                            className={`w-9 h-9 m-0.5 rounded-lg ${i === 33 ? 'bg-cyan-500' : 'bg-gray-800'
-                                }`}
-                        />
-                    ))}
-                </View>
-            </View>
-
-            <View className="items-center mb-8">
-                <TouchableOpacity className="bg-cyan-500 px-8 py-4 rounded-full flex-row items-center space-x-3">
-                    <Text className="text-black font-semibold text-lg">Journal</Text>
-                    <View className="bg-cyan-400 w-6 h-6 rounded-full" />
-                </TouchableOpacity>
-                <Text className="text-gray-600 text-xs mt-3">0</Text>
-            </View>
-
-            <View className="bg-gray-900 rounded-2xl px-6 py-5 items-center">
-                <Text className="text-gray-400 text-sm">
-                    Consecutive days with an entry created
-                </Text>
-                <View className="flex-row items-center mt-3">
-                    <Text className="text-orange-400 text-base ml-2 font-medium">
-                        Entry created today
-                    </Text>
-                </View>
-            </View>
+            </ScrollView>
         </SafeAreaView>
     );
-}
+};
+
+export default StreakScreen;

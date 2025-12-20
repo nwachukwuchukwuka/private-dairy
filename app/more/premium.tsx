@@ -15,7 +15,7 @@ const PremiumFeature = ({ icon, title, subtitle }: { icon: any; title: string; s
 );
 
 const ReviewCard = ({ text, author }: { text: string; author?: string }) => (
-    <View className="bg-gray-800 rounded-lg p-4 mb-4">
+    <View className="bg-[#1C1C1E] rounded-lg p-4 mb-4">
         <Text className="text-white mb-2">{text}</Text>
         <View className="flex-row">
             {[...Array(5)].map((_, i) => <Ionicons key={i} name="star" size={16} color="#FFCC00" />)}
@@ -29,16 +29,16 @@ const PremiumScreen = () => {
     return (
         <View className="flex-1 bg-black">
             <SafeAreaView className="flex-1" edges={['top']}>
-                <TouchableOpacity onPress={() => router.back()} className="absolute top-12 left-4 z-10">
-                    <Ionicons name="close" size={28} color="white" />
+                <TouchableOpacity onPress={() => router.back()} className="absolute top-8 left-4 z-10">
+                    <Ionicons name="close" size={32} color="gray" />
                 </TouchableOpacity>
 
-                <ScrollView contentContainerClassName="pt-16 pb-32 px-4">
+                <ScrollView contentContainerClassName="pt-20 pb-32 px-4">
                     <Text className="text-white text-3xl font-bold text-center">"Worth every penny"</Text>
                     <Text className="text-gray-400 text-center mt-2 mb-6">See why over 500,000 people have gone Premium</Text>
 
-                    <View className="bg-[#1C1C1E] border border-indigo-500 rounded-xl p-4">
-                        <TouchableOpacity className="bg-indigo-500 self-center px-3 py-1 rounded-full mb-4">
+                    <View className="  border border-indigo-500 rounded-xl p-4  mt-4">
+                        <TouchableOpacity className="bg-indigo-500 self-center px-3 py-1 rounded-full mb-4 -mt-8">
                             <Text className="text-white text-sm">Premium</Text>
                         </TouchableOpacity>
                         <PremiumFeature icon="camera-outline" title="Unlimited photos and videos" subtitle="A picture is worth a thousand words" />
@@ -56,7 +56,7 @@ const PremiumScreen = () => {
                         <Text className="text-white mt-2">4.8 Rating (166K Ratings)</Text>
                     </View>
 
-                    <ReviewCard text="The BEST. I'm so happy this app exists and it's worth all your money." />
+                    <ReviewCard text="The BEST . I'm so happy this app exists and it's worth all your money." />
                     <ReviewCard text="Worth the money. I am not the journaling type but this app has converted me." />
                 </ScrollView>
             </SafeAreaView>

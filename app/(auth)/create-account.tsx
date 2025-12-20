@@ -1,20 +1,21 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { KeyboardAvoidingView, Platform, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, Text, TextInput, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const CreateAccount = () => {
     const router = useRouter();
 
     return (
         <SafeAreaView className="flex-1 bg-black">
-            <View className="flex-row justify-between items-center p-4 border-b border-gray-800">
-                <TouchableOpacity onPress={() => router.back()}>
+            <View className="flex-row justify-between items-center p-4 bg-[#1C1C1E]">
+                <Pressable onPress={() => router.back()}>
                     <Text className="text-blue-500 text-lg">Cancel</Text>
-                </TouchableOpacity>
+                </Pressable>
                 <Text className="text-white font-bold text-lg">Create Account</Text>
-                <TouchableOpacity>
+                <Pressable onPress={() => router.push('/check-email')}>
                     <Text className="text-blue-500 font-bold text-lg">Next</Text>
-                </TouchableOpacity>
+                </Pressable>
             </View>
 
             <KeyboardAvoidingView
@@ -26,7 +27,7 @@ const CreateAccount = () => {
                         ENTER EMAIL ADDRESS
                     </Text>
                     <TextInput
-                        className="bg-gray-800 text-white rounded-md h-12 px-4 text-lg"
+                        className="bg-[#1C1C1E] text-white rounded-xl h-14 px-4 text-lg"
                         placeholder="name@example.com"
                         placeholderTextColor="#9CA3AF"
                         keyboardType="email-address"

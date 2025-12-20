@@ -7,7 +7,7 @@ export default function SyncLayout() {
             <Stack.Screen name="index" />
             <Stack.Screen name="status" />
             <Stack.Screen name="storage" />
-            <Stack.Screen name="advanced" />
+            <Stack.Screen name="sync-advanced" />
 
             <Stack.Screen
                 name="selective-sync"

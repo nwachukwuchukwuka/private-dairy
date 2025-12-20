@@ -79,7 +79,7 @@ const SyncScreen = () => {
                 <TouchableOpacity className="bg-[#1C1C1E] rounded-lg p-3 items-center mb-8">
                     <Text className="text-red-500 text-lg">Pause Sync</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push('/settings/sync/advanced')} className="bg-[#1C1C1E] rounded-lg p-3 flex-row justify-between items-center">
+                <TouchableOpacity onPress={() => router.push('/settings/sync/sync-advanced')} className="bg-[#1C1C1E] rounded-lg p-3 flex-row justify-between items-center">
                     <Text className="text-white text-lg">Advanced Sync Settings</Text>
                     <Ionicons name="chevron-forward" size={20} color="gray" />
                 </TouchableOpacity>
