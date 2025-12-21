@@ -12,6 +12,9 @@ interface KeyboardTemplateToolbarProps {
     onSelectIndentStyle: () => void;
     onSelectNumberedListStyle: () => void;
     onSelectChecklistStyle: () => void;
+    onAddDivider: () => void;
+    onSelectQuoteStyle: () => void;
+    onSelectCodeBlockStyle: () => void;
 }
 
 const MenuRow = ({ text, iconName, isDestructive = false, onPress }: { text: string; iconName: any; isDestructive?: boolean, onPress?: () => void }) => (
@@ -22,7 +25,7 @@ const MenuRow = ({ text, iconName, isDestructive = false, onPress }: { text: str
 );
 
 const KeyboardTemplateToolbar = ({ onAddSection, onSelectBodyStyle, onSelectTitleStyle, onSelectSubtitleStyle, onSelectListStyle, onSelectIndentStyle, onSelectNumberedListStyle,
-    onSelectChecklistStyle }: KeyboardTemplateToolbarProps) => {
+    onSelectChecklistStyle, onAddDivider, onSelectQuoteStyle, onSelectCodeBlockStyle }: KeyboardTemplateToolbarProps) => {
     const router = useRouter();
     const [menuView, setMenuView] = useState('main');
 
@@ -67,10 +70,16 @@ const KeyboardTemplateToolbar = ({ onAddSection, onSelectBodyStyle, onSelectTitl
                 <MenuRow text="CheckList" iconName="list-circle-outline" onPress={onSelectChecklistStyle} />
             </MenuOption>
             <MenuOption customStyles={{ optionWrapper: { borderBottomWidth: 1, borderBottomColor: "#454a52", paddingVertical: 10, paddingHorizontal: 15 } }}>
-                <MenuRow text="Quote" iconName="chatbubble-ellipses-outline" />
+                <MenuRow text="Quote" iconName="chatbubble-ellipses-outline" onPress={onSelectQuoteStyle} />
             </MenuOption>
             <MenuOption customStyles={{ optionWrapper: { paddingVertical: 10, paddingHorizontal: 15 } }}>
-                <MenuRow text="Divider" iconName="remove-outline" />
+                <MenuRow text="Line" iconName="remove-outline" onPress={onAddDivider} />
+            </MenuOption>
+            <MenuOption customStyles={{ optionWrapper: { paddingVertical: 10, paddingHorizontal: 15 } }}>
+                <MenuRow text="Code Block" iconName="remove-outline" onPress={onSelectCodeBlockStyle} />
+            </MenuOption>
+            <MenuOption customStyles={{ optionWrapper: { paddingVertical: 10, paddingHorizontal: 15 } }}>
+                <MenuRow text="Outdent" iconName="remove-outline" onPress={onSelectCodeBlockStyle} />
             </MenuOption>
         </>
     );
@@ -108,83 +117,6 @@ const KeyboardTemplateToolbar = ({ onAddSection, onSelectBodyStyle, onSelectTitl
                         >
                             <ScrollView keyboardShouldPersistTaps="always">
                                 {menuView === 'main' ? MainMenu : MoreMenu}
-                                {/* <MenuOption customStyles={{
-                                    optionWrapper: {
-                                        borderBottomWidth: 1,
-                                        borderBottomColor: "#454a52",
-                                        paddingVertical: 10,
-                                        paddingHorizontal: 15,
-                                    },
-                                }}>
-                                    <MenuRow text="Body" iconName="pricetag-outline" onPress={onSelectBodyStyle} />
-                                </MenuOption>
-                                <MenuOption customStyles={{
-                                    optionWrapper: {
-                                        borderBottomWidth: 1,
-                                        borderBottomColor: "#454a52",
-                                        paddingVertical: 10,
-                                        paddingHorizontal: 15,
-                                    },
-                                }}>
-                                    <MenuRow text="Title" iconName="folder-outline" onPress={onSelectTitleStyle} />
-                                </MenuOption>
-                                <MenuOption customStyles={{
-                                    optionWrapper: {
-                                        borderBottomWidth: 1,
-                                        borderBottomColor: "#454a52",
-                                        paddingVertical: 10,
-                                        paddingHorizontal: 15,
-                                    },
-                                }}>
-                                    <MenuRow text="Subtitle" iconName="copy-outline" onPress={onSelectSubtitleStyle} />
-                                </MenuOption>
-
-
-                                <MenuOption customStyles={{
-                                    optionWrapper: {
-                                        borderBottomWidth: 1,
-                                        borderBottomColor: "#454a52",
-                                        paddingVertical: 10,
-                                        paddingHorizontal: 15,
-                                    },
-                                }}>
-                                    <MenuRow text="List" iconName="trash-outline" onPress={onSelectListStyle} />
-                                </MenuOption>
-
-
-                                <MenuOption customStyles={{
-                                    optionWrapper: {
-                                        borderBottomWidth: 1,
-                                        borderBottomColor: "#454a52",
-                                        paddingVertical: 10,
-                                        paddingHorizontal: 15,
-                                    },
-                                }}>
-                                    <MenuRow text="Indent" iconName="information-circle-outline" onPress={onSelectIndentStyle} />
-                                </MenuOption>
-                                <MenuOption customStyles={{
-                                    optionWrapper: {
-                                        borderBottomWidth: 1,
-                                        borderBottomColor: "#454a52",
-                                        paddingVertical: 10,
-                                        paddingHorizontal: 15,
-                                    },
-                                }}>
-                                    <MenuRow text="Heading 6" iconName="time-outline" />
-                                </MenuOption>
-                                <MenuOption customStyles={{
-                                    optionWrapper: {
-                                        borderBottomWidth: 1,
-                                        borderBottomColor: "#454a52",
-                                        paddingVertical: 10,
-                                        paddingHorizontal: 15,
-                                    },
-                                }}>
-                                    <View className="flex-row items-center gap-4">
-                                        <Ionicons name="share-outline" size={22} color="white" />
-                                        <Text className={`text-white text-base`}>More...</Text>
-                                    </View>
-                                </MenuOption> */}
                             </ScrollView>
                         </MenuOptions>
                     </Menu>

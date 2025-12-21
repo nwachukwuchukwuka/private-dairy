@@ -17,6 +17,18 @@ export interface Journal {
     description?: string;
 }
 
+export interface TemplateLineItem {
+    id: number;
+    text: string;
+    isStyled: boolean;
+}
+
+export interface UserTemplate {
+    id: string;
+    name: string;
+    content: TemplateLineItem[]; // The template content is an array of lines
+}
+
 interface AppContextType {
     entries: JournalEntry[];
     addEntry: (entry: Omit<JournalEntry, 'id'>) => void;
@@ -39,6 +51,10 @@ interface AppContextType {
     isAuthenticated: boolean;
     setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 
+    userTemplates: UserTemplate[];
+    addUserTemplate: (template: Omit<UserTemplate, 'id'>) => void;
+    updateUserTemplate: (templateId: string, updates: Partial<Omit<UserTemplate, 'id'>>) => void;
+
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -53,18 +69,27 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     const [activeJournal, setActiveJournal] = useState<Journal | null>(initialJournals[0]);
     const [isShowingSplash, setIsShowingSplash] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const [userTemplates, setUserTemplates] = useState<UserTemplate[]>([]);
+
+    const addUserTemplate = (newTemplateData: Omit<UserTemplate, 'id'>) => {
+        const newTemplate: UserTemplate = {
+            ...newTemplateData,
+            id: new Date().toISOString() + Math.random(),
+        };
+        setUserTemplates(prev => [...prev, newTemplate]);
+    };
 
 
+    const updateUserTemplate = (templateId: string, updates: Partial<Omit<UserTemplate, 'id'>>) => {
+        setUserTemplates(prev =>
+            prev.map(template =>
+                template.id === templateId
+                    ? { ...template, ...updates }
+                    : template
+            )
+        );
+    };
 
-
-
-    // const addEntry = (newEntry: Omit<JournalEntry, 'id'>) => {
-    //     const entryWithId: JournalEntry = {
-    //         ...newEntry,
-    //         id: new Date().toISOString() + Math.random(),
-    //     };
-    //     setEntries(prevEntries => [entryWithId, ...prevEntries]);
-    // };
     const addEntry = (newEntryData: Omit<JournalEntry, 'id'>) => {
         const entryWithId: JournalEntry = {
             ...newEntryData,
@@ -146,7 +171,9 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         <AppContext.Provider value={{
             entries, addEntry, updateEntry, deleteEntry, journals, addJournal, activeJournal, setActiveJournal, updateJournal, deleteJournal, isShowingSplash,
             setIsShowingSplash, isAuthenticated,
-            setIsAuthenticated,
+            setIsAuthenticated, userTemplates,
+            addUserTemplate,
+            updateUserTemplate,
         }}>
             {children}
         </AppContext.Provider>

@@ -94,24 +94,6 @@ const NewEntryScreen = () => {
         router.back();
     };
 
-    // const handleDonePress = () => {
-    //     if (entryText.trim().length === 0) {
-    //         router.back();
-    //         return;
-    //     }
-
-    //     const newEntry = {
-    //         title: entryText,
-    //         metadata: "Just now · Abakaliki, Abakaliki · 89°F",
-    //         date: new Date(),
-    //         imageUri: imageUri || undefined,
-    //     };
-
-    //     addEntry(newEntry);
-    //     router.back();
-    // };
-
-
     return (
         // <SafeAreaProvider>
         <SafeAreaView className="flex-1 bg-[#D1B49A]" edges={['top']}>
